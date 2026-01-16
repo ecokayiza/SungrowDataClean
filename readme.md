@@ -34,8 +34,13 @@
 
 ## 任务：
 将数据转为以天为单位的实例并用适合分析处理和深度学习的格式存储
+```
 ExpectedFormat(InstanceLevel):
 Key: [station_id, date]
 Property:[ battery_capacity,power_limit, charge_type?, profit_ai,profit_self]
 Series:
-  Daytime | Price_purchase | Price_sell | PV_forcast | PV_real | Load_forcast | Load_real | Battery_dis | Battery_cha | Battery_soc   
+  Daytime | Price_purchase | Price_sell | PV_forcast | PV_real | Load_forcast | Load_real | Battery_dis | Battery_cha | Battery_soc  
+  ```
+
+## 注
+ 数据集中没有selfmode序列
