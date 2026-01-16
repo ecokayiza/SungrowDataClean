@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 import os
+import ast
 import logging
 from pathlib import Path
 from tqdm import tqdm
@@ -28,7 +29,7 @@ class PreprocessConfig:
     # Data Quality parameters
     required_points_per_day: int = 288  # Standard target (5-min intervals)
     price_series_len: int = 288
-    fill_value: float = -999.0          # Value for missing/lost points
+    fill_value: float = -9999.0          # Value for missing/lost points
     
     # Feature selections base on ExpectedFormat in readme.md
     metadata_cols: List[str] = field(default_factory=lambda: [
@@ -83,7 +84,18 @@ class EnergyDataPreprocessor:
             return None
          
         price_data = price_row_subset.iloc[0]['price_array']
-        return np.array(price_data) if price_data is not None else None
+        if price_data is None:
+            return None
+            
+        # Handle string representation of lists
+        if isinstance(price_data, str):
+            try:
+                price_data = ast.literal_eval(price_data)
+            except Exception as e:
+                logger.error(f"Error parsing price string: {e}")
+                return None
+                
+        return np.array(price_data)
 
     def process_station(self, sid: str) -> List[Dict[str, Any]]:
         """Processes all valid days for a single station."""

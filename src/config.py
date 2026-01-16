@@ -55,7 +55,8 @@ if __name__ == "__main__":
 
 # 2026-01-16 17:15:56,656 - Preprocessor - INFO - Skipping station 5725606: telemetry file missing.
 # 2026-01-16 17:15:56,833 - Preprocessor - INFO - Station 5742094, Day 2025-09-28: No telemetry points found, skipping.
-    sid = "5725606"
+    sid = "5915461"
     station_data_file = StationDataFile(sid)
     df = station_data_file.get_point_data_df()
-    print(df.head())
+    df.to_csv(f"./data/sample_point_data_{sid}.csv", index=False)
+    # 2026-01-16 17:43:42,854 - Preprocessor - INFO - Station 5915461, Day 2025-09-28: No telemetry points found, skipping.
